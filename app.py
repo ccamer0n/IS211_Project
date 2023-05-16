@@ -95,10 +95,8 @@ def create():
 def get_post(id):
     auth()
     post = get_db().execute("SELECT post.id, title, body, created, author_id, username FROM post JOIN user ON post.author_id = user.id WHERE post.id = ?", (id,)).fetchone()
-    if post is None:
-        abort(404, f"Post id {id} doesn't exist.")
-    if post['author_id'] != g.user['id']:
-        abort(403)
+
+    return post
 
 @app.route('/<int:id>/update', methods=('GET', 'POST'))
 def update(id):
