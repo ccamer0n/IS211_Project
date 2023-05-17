@@ -95,7 +95,6 @@ def create():
 def get_post(id):
     auth()
     post = get_db().execute("SELECT post.id, title, body, created, author_id, username FROM post JOIN user ON post.author_id = user.id WHERE post.id = ?", (id,)).fetchone()
-
     return post
 
 @app.route('/<int:id>/update', methods=('GET', 'POST'))
