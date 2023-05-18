@@ -8,6 +8,7 @@ app.secret_key = os.urandom(12).hex()
 
 @app.route('/', methods = ['GET'])
 def home():
+    '''Defines the home page. Here the user can register, login, and view all posts.'''
     auth()
     db = init_db()
     posts = db.execute("SELECT * FROM post JOIN user ON post.author_id = user.id ORDER BY created DESC")
@@ -15,6 +16,8 @@ def home():
 
 @app.route('/register', methods=('GET', 'POST'))
 def register():
+    '''Presents the user with a form to register a username and password
+    Credentials are stored in a sql database'''
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -34,8 +37,11 @@ def register():
                 return redirect(url_for("login"))
         flash(error)
     return render_template('register.html')
+
 @app.route('/login', methods=('GET', 'POST'))
 def login():
+    '''Presents the user with a login form
+    Queries the database and validates user credentials'''
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -54,6 +60,7 @@ def login():
     return render_template("login.html")
 
 def auth():
+    '''Assigns a session to a global user variable for authentication purposes'''
     user_id = session.get('user_id')
     if user_id is None:
         g.user = None
@@ -61,11 +68,14 @@ def auth():
         g.user = get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
 @app.route('/logout')
 def logout():
+    '''Terminates the current session and returns the user to the home page'''
     session.clear()
     return redirect('/')
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=('GET', 'POST'))
 def dashboard():
+    '''Presents the logged-in user with a list of posts they have authored
+    The user is able to create new posts and edit or delete existing posts'''
     auth()
     if g.user:
         con = get_db()
@@ -76,6 +86,8 @@ def dashboard():
 
 @app.route('/create', methods=('GET', 'POST'))
 def create():
+    '''Presents the user with a form to create and submit a new post
+    Posts are stored in a sql database'''
     auth()
     if request.method == 'POST':
         title = request.form['title']
@@ -93,12 +105,15 @@ def create():
     return render_template('create.html')
 
 def get_post(id):
+    '''Queries the database for a provided post id and returns the corresponding row'''
     auth()
     post = get_db().execute("SELECT post.id, title, body, created, author_id, username FROM post JOIN user ON post.author_id = user.id WHERE post.id = ?", (id,)).fetchone()
     return post
 
 @app.route('/<int:id>/update', methods=('GET', 'POST'))
 def update(id):
+    '''Presents the logged-in user with a form to update an existing post.
+    Authenticates the user and validates the provided post id'''
     post = get_post(id)
     if request.method == 'POST':
         title = request.form['title']
@@ -115,8 +130,9 @@ def update(id):
             return redirect(url_for('dashboard'))
     return render_template('update.html', post=post)
 
-@app.route('/<int:id>/delete', methods = ['POST'])
+@app.route('/<int:id>/delete', methods = ('GET', 'POST'))
 def delete(id):
+    '''Validates and deletes the selected post by its post id'''
     get_post(id)
     con = get_db()
     con.execute("DELETE FROM post WHERE id = ?", (id,))

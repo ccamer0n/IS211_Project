@@ -1,17 +1,19 @@
-html { font-family: sans-serif; background: #483d8b; padding: 1rem; }
+html { font-family: "Times New Roman", serif; background: #483d8b; padding: 1rem; }
 body { max-width: 960px; margin: 0 auto; background: #f5fffa; }
 h1 { font-family: "Times New Roman", serif; color: #f5fffa; margin: 1rem 0; text-shadow: 4px 4px #483d8b; font-weight: bold; font-size: 40px; padding-bottom: 1rem; }
-h2 { font-family: "Times New Roman", serif; color: #483d8b; margin: 1rem 0; font-variant: small-caps; }
-h3 { font-family: Helvetica, sans-serif; color: #483d8b; margin: 1rem 0; }
+h2 { font-family: "Times New Roman", serif; color: #483d8b; margin: 1rem 0; font-size: 30px; text-decoration-line: underline; }
+h3 { font-family: "Times New Roman", serif; color: #483d8b; margin: 0.5rem 0; font-size: 20px; }
 a { color: #377ba8; }
 hr { border: none; border-top: 1px solid lightgray; }
-nav { background: #5f9ea0; display: block; align-items: left; padding: 0.5rem 0.5rem; position: fixed; float: left; height: 92.5%; width: 12%; }
+nav { background: #5f9ea0; display: block; align-items: left; padding: 0.5rem 0.5rem; position: fixed; float: left; width: 140px; border-style: ridge; border-width: 3px; border-color: #708090; }
 nav h1 { flex: auto; margin: 0; }
 nav h1 a { text-decoration: none; padding: 0.25rem 0.5rem; }
 nav ul  { display: block; list-style: none; margin: 0; padding: 0; }
-nav ul li a, nav ul li span, .action { display: block; color: #f5fffa; width: 100px; padding: 1rem 0.5rem; text-align: left; }
-li a:hover { background-color: #483d8b; color: #f5fffa;}
-.content { padding: 0 1rem 1rem; float: right; width: 75%; background: #f5fffa; }
+nav ul li a, nav ul li span, .action { display: block; color: #f5fffa; width: 120px; padding: 1rem 0.5rem; text-align: left; }
+li a:hover { background-color: #f5fffa; color: #483d8b; }
+.link { display: flex; color: #483d8b; padding: 1rem 1rem; }
+.h2link { display: flex; color: #483d8b; padding: 1rem 1rem; margin: 0.5rem; }
+.content { padding: 0 1rem 1rem; float: right; width: 740px; background: #f5fffa; border-style: ridge; border-width: 3px; border-color: #708090; }
 .content > header { border-bottom: 1px solid lightgray; display: flex; align-items: flex-end; }
 .content > header h1 { flex: auto; margin: 1rem 0 0.25rem 0; }
 .flash { margin: 1em 0; padding: 1em; background: #cae6f6; border: 1px solid #377ba8; }

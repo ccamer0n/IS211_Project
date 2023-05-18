@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}Dashboard{% endblock %}</h1>
+    <h2>{% block title %}Dashboard{% endblock %}</h2>
     {% if g.user %}
-        <a class="action" href="{{ url_for('create') }}">New</a>
+        <a class="h2link" href="{{ url_for('create') }}">New Post</a>
     {% endif %}
 {% endblock %}
 
@@ -12,14 +12,14 @@
         <article class="post">
             <header>
                 <div>
-                    <h1>{{ post['title'] }}</h1>
-                    <div class="about">by {{ post['username'] }} on {{ post['created'] }}</div>
+                    <h3>{{ post['title'] }}</h3>
+                    <div class="about"> {{ post['created'] }}</div>
                 </div>
                 {% if g.user['id'] == post['author_id'] %}
-                    <a class="action" href="{{ url_for('update', id=post['id']) }}">Edit</a>
+                    <a class="link" href="{{ url_for('update', id=post['id']) }}">Edit</a>
+                    <a class="link" href="{{ url_for('delete', id=post['id']) }}" onclick="return confirm('Are you sure?');">Delete</a>
                 {% endif %}
             </header>
-            <p class="body">{{ post['body'] }}</p>
         </article>
         {% if not loop.last %}
             <hr>
